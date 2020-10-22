@@ -1,5 +1,6 @@
 package com.bxp;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Data;
 
 import java.util.*;
@@ -7,13 +8,31 @@ import java.util.*;
 public class RandomAllocation {
     private Random random = new Random();
     public static void main(String[] args) {
-        Integer[] vendors = new Integer[]{4, 5, 6, 5};
-        Integer[] brands = new Integer[]{7, 3, 10};
-        Integer sum = 20;
+        Integer[] vendors = new Integer[]{368,122,41,14,6,1,737,781,457,33,6,30,541,2031,264,29,359,2305,228,2,273,1359,16,19,274,1};
+        Integer[] brands = new Integer[]{1909, 100, 781, 1511, 2212, 94, 3001, 689};
+        int sum = 0;
+        for (int i = 0; i < vendors.length; i++){
+            sum += vendors[i];
+        }
+
         RandomAllocation ra = new RandomAllocation();
         Map<Integer, Integer[]> result = ra.randomMalloc(vendors, brands, sum);
+        printResult2(result);
+    }
 
-        printResult(result);
+    private static void printResult2(Map<Integer, Integer[]> result) {
+        Set<Map.Entry<Integer, Integer[]>> set = result.entrySet();
+        for (Map.Entry<Integer, Integer[]> entry : set){
+            Integer[] values = entry.getValue();
+            for (int i = 0; i < values.length; i++){
+                if(i == values.length - 1){
+                    System.out.print(values[i]);
+                }else {
+                    System.out.print(values[i] + ",");
+                }
+            }
+            System.out.println();
+        }
     }
 
     private static void printResult(Map<Integer, Integer[]> result) {
