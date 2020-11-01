@@ -8,7 +8,14 @@ import lombok.Data;
 public class Brand {
     private Integer index;
     private String name;
+    /**
+     * 品牌原始数量
+     */
     private Integer count;
+    /**
+     * 品牌剩余数量
+     */
+    private Integer lastCount;
 
     /**
      * 分配给某一个商家，多少这种品牌
@@ -20,12 +27,15 @@ public class Brand {
         if (vendor == null) {
             return false;
         }
-        if (this.count < count) {
+        if (this.lastCount < count) {
             return false;
         }
-        Brand brand = new Brand(this.getIndex(), this.getName(), count);
-        this.setCount(this.getCount() - count);
+        /**
+         * 创建一个品牌子集给一个商家
+         */
+        Brand brand = new Brand(this.getIndex(), this.getName(), count,  count);
         vendor.malloc(brand);
+        this.setLastCount(this.getLastCount() - count);
         return true;
     }
 }

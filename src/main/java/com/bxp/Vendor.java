@@ -17,7 +17,7 @@ public class Vendor {
      */
     private String name;
     /**
-     * 商家数量
+     * 商家最开始数量
      */
     private Integer count;
     /**
@@ -39,7 +39,8 @@ public class Vendor {
      * @param brand
      */
     public boolean malloc(Brand brand) {
-        if (brand.getCount() > need) {
+        //给商家分配的数量大于商家需要的数量，不能这样分配，直接返回false
+        if (brand.getLastCount() > need) {
             return false;
         }
         this.setNeed(this.getNeed() - brand.getCount());

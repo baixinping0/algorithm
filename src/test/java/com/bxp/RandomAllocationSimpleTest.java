@@ -1,10 +1,8 @@
 package com.bxp;
 
 import com.alibaba.fastjson.JSON;
-import com.bxp.strategy.impl.OrderBrandStrategy;
-import com.bxp.strategy.impl.RateVendorStrategy;
-import com.bxp.strategy.impl.ShuffleBrandStrategy;
-import com.bxp.strategy.impl.ShuffleVendorStrategy;
+import com.bxp.strategy.BrandSortStrategy;
+import com.bxp.strategy.impl.*;
 import org.junit.Test;
 
 import java.util.List;
@@ -18,36 +16,25 @@ public class RandomAllocationSimpleTest {
      */
     @Test
     public void randomMallocTest0(){
-        Allocation simple = new Allocation();
         String[] vendorNames = new String[]{"L1P1","L1P2","L1P3","L1P4"};
-        Integer vendorCounts[] = new Integer[]{4, 5, 6, 5};
+        Integer vendorCounts[] = new Integer[]{4, 3, 5, 7};
         Integer[] vendorRates = new Integer[]{4, 3, 2, 1};
-        String[] brandNames = new String[]{"B1","B2","B3", "B4"};
-        Integer[] brandCounts = new Integer[]{7, 3, 12, 10};
+        String[] brandNames = new String[]{"B1","B2","B3"};
+        Integer[] brandCounts = new Integer[]{9, 3, 10};
         long start = System.currentTimeMillis();
+
+        //7, 6, 4, 3
+        //10. 7, 3
+        //7, 6, 3,
 
         Allocation allocation = new Allocation();
         List<Vendor> vendorList = allocation.initVendorList(vendorNames,vendorCounts, vendorRates);
         List<Brand> brandList = allocation.initBrandList(brandNames, brandCounts);
 
-        AllocationResult result = allocation.malloc(vendorList, 0, brandList, 0, new ShuffleVendorStrategy(), new OrderBrandStrategy());
+        AllocationResult result = allocation.malloc(vendorList, brandList);
 
-        if (result.isVendorSurplus()){
-            System.out.println("商家有剩余");
-            return;
-        }
-        if (result.isBrandSurplus()){
-            System.out.println("品牌有剩余, 再次按照  比重 分配");
-            List<Vendor> vendorResult = result.getVendorList();
-            for (int i = 0; i < vendorList.size(); i++){
-                Vendor vendor = vendorResult.get(i);
-                vendor.setNeed(vendor.getCount());
-            }
-            allocation.malloc(vendorResult, 0, result.getBrandList(), result.getBrandIndex(), new RateVendorStrategy(), new OrderBrandStrategy());
-        }
         System.out.println(JSON.toJSONString(vendorList));
-        System.out.println(JSON.toJSONString(brandList));
-        System.out.println("执行时间 : " + (System.currentTimeMillis() - start) + " ms");
+        System.out.println();
     }
     @Test
     public void randomMallocTest(){
@@ -63,23 +50,26 @@ public class RandomAllocationSimpleTest {
         List<Vendor> vendorList = allocation.initVendorList(vendorNames,vendorCounts, vendorRates);
         List<Brand> brandList = allocation.initBrandList(brandNames, brandCounts);
 
-        AllocationResult result = allocation.defaultMalloc(vendorList, brandList);
+        AllocationResult result = allocation.malloc(vendorList, brandList);
 
-        if (result.isVendorSurplus()){
-            System.out.println("商家有剩余");
-            return;
-        }
-        if (result.isBrandSurplus()){
-            System.out.println("品牌有剩余, 再次按照  比重 分配");
-            List<Vendor> vendorResult = result.getVendorList();
-            for (int i = 0; i < vendorList.size(); i++){
-                Vendor vendor = vendorResult.get(i);
-                vendor.setNeed(vendor.getCount());
-            }
-            allocation.malloc(vendorResult, 0, result.getBrandList(), result.getBrandIndex(), new RateVendorStrategy(), new OrderBrandStrategy());
-        }
         System.out.println(JSON.toJSONString(vendorList));
-        System.out.println(JSON.toJSONString(brandList));
         System.out.println("执行时间 : " + (System.currentTimeMillis() - start) + " ms");
+    }
+
+    public static void main(String[] args) {
+        String[] vendorNames = new String[]{"L1P1","L1P2","L1P3","L1P4"};
+        Integer vendorCounts[] = new Integer[]{4, 5, 6, 5};
+        Integer[] vendorRates = new Integer[]{4, 3, 2, 1};
+        String[] brandNames = new String[]{"B1","B2","B3", "B4"};
+        Integer[] brandCounts = new Integer[]{7, 3, 12, 10};
+        long start = System.currentTimeMillis();
+
+        Allocation allocation = new Allocation();
+        List<Vendor> vendorList = allocation.initVendorList(vendorNames,vendorCounts, vendorRates);
+        List<Brand> brandList = allocation.initBrandList(brandNames, brandCounts);
+
+        BrandSortStrategy brandSortStrategy = new MaxCountBrandSortSortStrategy();
+        brandSortStrategy.strategy(brandList);
+        System.out.println();
     }
 }

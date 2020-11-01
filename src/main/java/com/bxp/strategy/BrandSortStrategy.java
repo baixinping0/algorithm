@@ -5,6 +5,6 @@ import com.bxp.Vendor;
 
 import java.util.List;
 
-public interface BrandStrategy {
+public interface BrandSortStrategy {
     void strategy(List<Brand> brandList);
 }

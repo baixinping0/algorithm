@@ -1,13 +1,13 @@
 package com.bxp.strategy.impl;
 
 import com.bxp.Vendor;
-import com.bxp.strategy.VendorStrategy;
+import com.bxp.strategy.VendorSortStrategy;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class RateVendorStrategy implements VendorStrategy {
+public class RateVendorSortStrategy implements VendorSortStrategy {
 
     @Override
     public void strategy(List<Vendor> vendorList) {
