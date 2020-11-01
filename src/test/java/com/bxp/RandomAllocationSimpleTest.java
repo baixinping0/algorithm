@@ -33,9 +33,57 @@ public class RandomAllocationSimpleTest {
 
         AllocationResult result = allocation.malloc(vendorList, brandList);
 
-        System.out.println(JSON.toJSONString(vendorList));
+        printVenderResult(vendorList, vendorNames, brandList, brandNames);
+        printBrandResult(brandList);
+
+//        System.out.println(JSON.toJSONString(vendorList));
         System.out.println();
     }
+
+    private void printBrandResult(List<Brand> brandList) {
+        for (Brand brand : brandList){
+            System.out.println(brand.getName() + " : " + brand.getLastCount());
+        }
+    }
+
+    private void printVenderResult(List<Vendor> vendorList,String[] vendorNames,
+                                   List<Brand> brandList, String[] brandNames) {
+
+        String[][] result = new String[vendorList.size()][brandList.size()];
+
+        for (int i = 0; i < result.length; i++){
+            for (int j = 0; j < result[0].length; j++){
+                result[i][j] = "0";
+            }
+        }
+
+        for (Vendor vendor : vendorList){
+            for (Brand brand : vendor.getBrands()){
+                String val = "";
+                if (vendor.getNeed() == 0){
+                    val = String.valueOf(brand.getCount());
+                }else {
+                    val = brand.getCount() + " + " + vendor.getNeed();
+                }
+                result[vendor.getIndex()][brand.getIndex()] = val;
+            }
+        }
+
+        System.out.print(",");
+        for (String brandName : brandNames){
+            System.out.print(brandName + ",");
+        }
+        System.out.println();
+        for (int i = 0; i < result.length; i++){
+            System.out.print(vendorNames[i] + ",");
+            for (int j = 0; j < result[0].length; j++){
+                System.out.print(result[i][j] + ",");
+            }
+            System.out.println();
+        }
+    }
+
+
     @Test
     public void randomMallocTest(){
         Allocation simple = new Allocation();
@@ -50,10 +98,25 @@ public class RandomAllocationSimpleTest {
         List<Vendor> vendorList = allocation.initVendorList(vendorNames,vendorCounts, vendorRates);
         List<Brand> brandList = allocation.initBrandList(brandNames, brandCounts);
 
-        AllocationResult result = allocation.malloc(vendorList, brandList);
+        new RateVendorSortStrategy().strategy(vendorList);
+        printVenderList(vendorList);
+        System.out.println("*****************");
+        new MaxCountBrandSortSortStrategy().strategy(brandList);
+        printBrandResult(brandList);
+        System.out.println("****************");
 
-        System.out.println(JSON.toJSONString(vendorList));
+
+        AllocationResult result = allocation.malloc(vendorList, brandList);
+        printVenderResult(vendorList, vendorNames, brandList, brandNames);
+        printBrandResult(brandList);
+//        System.out.println(JSON.toJSONString(vendorList));
         System.out.println("执行时间 : " + (System.currentTimeMillis() - start) + " ms");
+    }
+
+    private void printVenderList(List<Vendor> vendorList) {
+        for (Vendor vendor: vendorList){
+            System.out.println(vendor.getName() + " : " + vendor.getRate() + " : " + vendor.getNeed());
+        }
     }
 
     public static void main(String[] args) {
