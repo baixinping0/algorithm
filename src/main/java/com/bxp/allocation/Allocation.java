@@ -1,9 +1,9 @@
-package com.bxp;
+package com.bxp.allocation;
 
-import com.bxp.strategy.BrandSortStrategy;
-import com.bxp.strategy.MallocStrategy;
-import com.bxp.strategy.VendorSortStrategy;
-import com.bxp.strategy.impl.*;
+import com.bxp.allocation.strategy.BrandSortStrategy;
+import com.bxp.allocation.strategy.MallocStrategy;
+import com.bxp.allocation.strategy.VendorSortStrategy;
+import com.bxp.allocation.strategy.impl.*;
 
 import java.util.*;
 

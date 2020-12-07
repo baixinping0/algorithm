@@ -1,8 +1,11 @@
 package com.bxp;
 
-import com.alibaba.fastjson.JSON;
-import com.bxp.strategy.BrandSortStrategy;
-import com.bxp.strategy.impl.*;
+import com.bxp.allocation.Allocation;
+import com.bxp.allocation.AllocationResult;
+import com.bxp.allocation.Brand;
+import com.bxp.allocation.Vendor;
+import com.bxp.allocation.strategy.BrandSortStrategy;
+import com.bxp.allocation.strategy.impl.*;
 import org.junit.Test;
 
 import java.util.List;

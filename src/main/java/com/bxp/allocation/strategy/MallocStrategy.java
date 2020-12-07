@@ -1,8 +1,8 @@
-package com.bxp.strategy;
+package com.bxp.allocation.strategy;
 
-import com.bxp.AllocationResult;
-import com.bxp.Brand;
-import com.bxp.Vendor;
+import com.bxp.allocation.AllocationResult;
+import com.bxp.allocation.Brand;
+import com.bxp.allocation.Vendor;
 
 import java.util.List;
 

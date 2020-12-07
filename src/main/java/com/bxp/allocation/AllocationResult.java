@@ -1,4 +1,4 @@
-package com.bxp;
+package com.bxp.allocation;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,11 +1,11 @@
-package com.bxp.strategy.impl;
+package com.bxp.allocation.strategy.impl;
 
-import com.bxp.AllocationResult;
-import com.bxp.Brand;
-import com.bxp.Vendor;
-import com.bxp.strategy.BrandSortStrategy;
-import com.bxp.strategy.ConditionStrategy;
-import com.bxp.strategy.MallocStrategy;
+import com.bxp.allocation.AllocationResult;
+import com.bxp.allocation.Brand;
+import com.bxp.allocation.Vendor;
+import com.bxp.allocation.strategy.BrandSortStrategy;
+import com.bxp.allocation.strategy.ConditionStrategy;
+import com.bxp.allocation.strategy.MallocStrategy;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,4 @@
-package com.bxp;
-
-import com.alibaba.fastjson.JSON;
-import lombok.Data;
+package com.bxp.allocation;
 
 import java.util.*;
 

@@ -1,7 +1,7 @@
-package com.bxp.strategy.impl;
+package com.bxp.allocation.strategy.impl;
 
-import com.bxp.Brand;
-import com.bxp.strategy.ConditionStrategy;
+import com.bxp.allocation.Brand;
+import com.bxp.allocation.strategy.ConditionStrategy;
 
 /**
  * 判断商品剩余数量和商家需要数量之间的关系，判断是否能够分配

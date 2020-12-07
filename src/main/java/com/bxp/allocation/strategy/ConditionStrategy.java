@@ -1,6 +1,6 @@
-package com.bxp.strategy;
+package com.bxp.allocation.strategy;
 
-import com.bxp.Brand;
+import com.bxp.allocation.Brand;
 
 public interface ConditionStrategy {
     /**
